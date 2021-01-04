@@ -9,10 +9,22 @@
 				<img :src="btnImgUrl" alt="" @click="switchBtn">
 			</view>
 
-			<swiper-list :list="netList" v-show="isShow"></swiper-list>
-			<!-- <span></span>			 -->
-			<all-list :list="netList" v-show="!isShow"></all-list>
+			<swiper-list 
+				v-show="isShow"
+				:list="netList" 
+				:currentIndex="selectMenuIndex"
+				@handleOk="handleOk"
+			 ></swiper-list>
+
+			<all-list 
+				v-show="!isShow" 
+				:list="netList"  
+				:currentIndex="selectMenuIndex"
+				@handleOk="handleOk"
+			></all-list>
 		</view>
+		
+		<list-content class="list-content" :index="selectMenuIndex" :class="isShow?'contentHeightA':'contentHeightB'"></list-content>
 
 		<!-- <menu-list :menus="list" :name="onName" :title.sync="title">
 			<template #listDate="listDateScope">
@@ -29,6 +41,8 @@
 <script>
 	import SwiperList from '../../components/list/swiperList.vue'
 	import AllList from '../../components/list/allList.vue'
+	import ListContent from '../../components/list/listContent.vue'
+	
 	import {
 		sayName
 	} from '../../utils/demo.js'
@@ -74,6 +88,7 @@
 						title: '知乎推荐',
 						iconUrl:'https://img.printf520.com/img/picture/zhihu.com.png',
 						url:'https://mo.fish/?class_id=%E5%85%A8%E9%83%A8&hot_id=1053'
+						// url:'https://www.zhihu.com/hot'
 					},
 					{
 						title: '抖音',
@@ -92,7 +107,8 @@
 					},
 				],
 				isShow: false,
-				message: 'Hello'
+				message: 'Hello',
+				selectMenuIndex:0,
 			}
 		},
 		computed: {
@@ -104,15 +120,23 @@
 		components: {
 			// MenuList
 			SwiperList,
-			AllList
+			AllList,
+			ListContent
 		},
 		onLoad() {
-			sayName('小五')
-			console.log('btnImgUrl---',this.btnImgUrl)
+			// sayName('小五')
+			// console.log('btnImgUrl---',this.btnImgUrl)
 		},
 		methods: {
 			switchBtn(){
 				this.isShow = !this.isShow
+			},
+			
+			handleOk(msg){
+				console.log('msg',msg)
+				// this.contentUrl = msg.url;
+				this.selectMenuIndex = msg.index;
+				// console.log('this.contentUrl---',this.contentUrl)
 			}
 		},
 	}
@@ -124,9 +148,11 @@
 	}
 
 	.list-box {
-		position: relative;
+		// position: relative;
 		padding: 5px 10px;
 		box-sizing: border-box;
+		min-height: 30px;
+		z-index: 9;
 
 		/* background-color: #f8f8f8; */
 		.btn-show {
@@ -147,5 +173,19 @@
 				vertical-align: middle;
 			}
 		}
+	}
+	.list-content{
+		position: fixed;
+		left: 0;right: 0;;
+		margin: auto;
+		width: 90%;
+		border:3px solid gray;
+		box-sizing: border-box;
+	}
+	.contentHeightA{
+		top: 120px;
+	}
+	.contentHeightB{
+		top: 200px;
 	}
 </style>

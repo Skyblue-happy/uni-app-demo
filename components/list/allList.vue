@@ -1,12 +1,13 @@
 <template>
 	<view class="list-box">
 		<view  
-			class="list-item"
-			:list="list" 
-			v-for="(item,index) in list" 
-			:key="index" 
-			:currentIndex="currentIndex" 
-			:class="currentIndex == index?'active':''" 
+				class="list-item"
+				v-for="(item,index) in list"
+				:key="index" 
+				:list="list" 
+				:currentIndex="currentIndex" 
+				:class="currentIndex == index?'active':''" 
+				@click="chooseItem(index,item)"
 			 >
 			<img :src="item.iconUrl" alt="" class="icon-img">
 			<span>{{item.title}}</span>
@@ -30,6 +31,20 @@
 				default:0
 			}
 		},
+		methods:{
+			chooseItem(index,item){
+				
+				let obj = {
+					index,
+					url:item.url
+				}
+				this.$emit('handleOk',obj)
+				// console.log('click---',obj)
+				// console.log('click---item',item)
+				// console.log('click---index',index)
+				// console.log(item,index)
+			}
+		}
 	}
 </script>
 
