@@ -42,6 +42,7 @@
 	import SwiperList from '../../components/list/swiperList.vue'
 	import AllList from '../../components/list/allList.vue'
 	import ListContent from '../../components/list/listContent.vue'
+	import config from '../../utils/config.js'
 	
 	import {
 		sayName
@@ -113,7 +114,7 @@
 		},
 		computed: {
 			btnImgUrl: function() {
-				console.log('执行了 btnImgUrl')
+				// console.log('执行了 btnImgUrl')
 				return this.isShow ? '../../static/show.png' : '../../static/unshow.png'
 			},
 		},
@@ -125,7 +126,14 @@
 		},
 		onLoad() {
 			// sayName('小五')
-			// console.log('btnImgUrl---',this.btnImgUrl)
+
+			// console.log('baseUrl_______2',config.baseUrl)
+			if(process.env.NODE_ENV === 'development'){
+				console.log('开发环境')
+			}
+			if (process.env.NODE_ENV === 'production') {
+				console.log('生产环境')
+			}
 		},
 		methods: {
 			switchBtn(){

@@ -78,7 +78,10 @@
     "h5" : {
         "router" : {
             "mode" : "history",
-            "base" : "./"
+            "base" : ""
+        },
+        "sdkConfigs" : {
+            "maps" : {}
         }
     }
 }
